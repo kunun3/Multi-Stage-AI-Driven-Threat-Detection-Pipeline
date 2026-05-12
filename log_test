@@ -1,0 +1,38 @@
+curl -k -X POST "https://localhost:9200/logs-system.default/_doc/?pretty" \ 
+-u '<username>:<password>' \
+-H 'Content-Type: application/json' \
+-d '{                                
+  "@timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'",
+  "message": "Critical Alert: rubeus asktgt ptt and mimikatz used to dump lsass via base64 powershell script",                       
+  "winlog": {"event_id": "4104", "user": {"name": "admin", "identifier": "S-1-5-18"}},                     
+  "process": {"command_line": "powershell.exe -ExecutionPolicy Bypass -m rubeus asktgt /user:administrator"},
+  "event": {"code": "4104"},
+  "user": {"name": "system"}
+}'
+
+
+
+
+
+curl -k -X POST "https://localhost:9200/logs-system.auth-default/_doc/?pretty" \
+-u 'elastic:<password>' \
+-H 'Content-Type: application/json' \
+-d '{
+  "@timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'",
+  "message": "mimikatz access to lsass.exe detected",
+  "winlog": {"event_id": "4104"},
+  "user": {"name": "admin"},
+  "CommandLine": "powershell.exe -File C:\\Users\\Public\\script.ps1"
+}'
+
+
+
+
+
+curl -k -X POST "https://localhost:9200/logs-system/_doc/?pretty" -u 'elastic:<password>' -H 'Content-Type: application/json' -d '{                                           ─╯
+  "@timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'",
+  "message": "Script execution",
+  "event_id": "4104",
+  "user": {"name": "student"},
+  "CommandLine": "powershell.exe -File C:\\Users\\Public\\script.ps1"
+}'

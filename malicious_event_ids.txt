@@ -1,0 +1,92 @@
+WINDOWS SECURITY EVENT IDS FOR MALICIOUS ACTIVITY DETECTION
+
+========================================================
+CATEGORY 1: DEFENSE EVASION & LOG TAMPERING (HIGH PRIORITY)
+========================================================
+1100: The event logging service has shut down
+1101: Audit events have been dropped by the transport
+1102: The audit log was cleared
+1104: The Security Log is now full
+4618: A monitored security event pattern has occurred
+4719: System audit policy was changed
+4826: Loading of unused boot-start driver
+4964: Special groups have been assigned to a new logon
+
+========================================================
+CATEGORY 2: EXECUTION & POWERSHELL (HIGH CONTEXT)
+========================================================
+4103: PowerShell Module Logging
+4104: PowerShell Script Block Logging (Detailed script content)
+4688: A new process has been created (Crucial for process trees)
+4696: A primary token was assigned to a process
+5051: File was virtualized
+
+========================================================
+CATEGORY 3: PERSISTENCE & SYSTEM CHANGES
+========================================================
+4697: A service was installed in the system
+4698: A scheduled task was created
+4699: A scheduled task was deleted
+4700: A scheduled task was enabled
+4701: A scheduled task was disabled
+4702: A scheduled task was updated
+7045: A service was installed in the system (System Log)
+
+========================================================
+CATEGORY 4: IDENTITY, AUTHENTICATION & LATERAL MOVEMENT
+========================================================
+4624: An account was successfully logged on
+4625: An account failed to log on
+4648: A logon was attempted using explicit credentials
+4672: Special privileges assigned to new logon
+4720: A user account was created
+4722: A user account was enabled
+4728: A member was added to a security-enabled global group
+4732: A member was added to a security-enabled local group
+4765: SID History was added to an account
+4766: An attempt to add SID History to an account failed
+4768: A Kerberos authentication ticket (TGT) was requested
+4769: A Kerberos service ticket was requested
+4776: The computer attempted to validate the credentials for an account
+4778: A session was reconnected to a Window Station
+4779: A session was disconnected from a Window Station
+4820: A Kerberos Ticket-granting-ticket (TGT) was denied
+4821: A Kerberos service ticket was denied
+4822: NTLM authentication failed (Protected User group)
+4823: NTLM authentication failed (Access control restrictions)
+4824: Kerberos pre-authentication failed (DES or RC4)
+
+========================================================
+CATEGORY 5: OBJECT ACCESS & EXFILTRATION
+========================================================
+4656: A handle to an object was requested
+4660: An object was deleted
+4663: An attempt was made to access an object (File/Registry)
+4670: Permissions on an object were changed
+4673: A privileged service was called
+4674: An operation was attempted on a privileged object
+5140: A network share object was accessed
+5145: A network share object was checked to see whether client can be granted access
+
+========================================================
+CATEGORY 6: WINDOWS DEFENDER / MALWARE DETECTION
+========================================================
+1005: Malware scan failed
+1006: Malware or unwanted software detected
+1007: Action to protect the system performed
+1008: Action to protect the system failed
+1012: Unable to delete item in quarantine
+1015: Suspicious behavior detected
+1116: Malware or unwanted software detected
+1117: Action to protect the system performed
+1118: Action to protect the system failed
+1119: Critical error occurred when taking action
+
+========================================================
+CATEGORY 7: OPERATIONAL / LOW SIGNAL (USE FOR CONTEXT)
+========================================================
+4634: An account was logged off
+4647: User initiated logoff
+4658: The handle to an object was closed
+4985: Transaction state change
+4691: Indirect access to an object was requested
