@@ -96,8 +96,6 @@ A custom heuristic scoring algorithm evaluates each log based on:
 
 - Attack signatures
 - Behavioral indicators
-- IOC matching
-- Event correlations
 - Suspicious command execution
 - Obfuscation techniques
 
