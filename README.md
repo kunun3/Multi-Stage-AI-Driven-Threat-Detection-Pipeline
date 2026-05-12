@@ -24,9 +24,7 @@ The result is a scalable, cost-efficient, and context-aware threat detection sys
 - Kibana dashboards for live monitoring
 - ES|QL-powered incident filtering
 - Cross-platform schema normalization
-- Modular microservices architecture
 - Cost-efficient AI routing logic
-- Detection of advanced attack techniques
 
 ---
 
