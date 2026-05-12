@@ -252,3 +252,4 @@ significantly reduces false positives compared to traditional rule-based systems
 
 
 ---
+The `scc.py` file can be much more complex and handle many different cases, event IDs, behaviors, and more. This is just a functional prototype , but the overall logic remains the same.
