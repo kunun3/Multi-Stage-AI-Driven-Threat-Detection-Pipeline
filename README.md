@@ -1,34 +1,18 @@
-# Multi-Stage AI-Driven Threat Detection Pipeline
+# System Architecture — Multi-Stage Threat Detection Pipeline
 
-## Overview
+The platform follows a **tiered intelligence architecture** designed to process, classify, and enrich security telemetry in real time.
 
-The **Multi-Stage AI-Driven Threat Detection Pipeline** is an automated SOC (Security Operations Center) framework designed to combine traditional heuristic threat detection with advanced Large Language Models (LLMs).
+The pipeline separates detection into two independent analytical stages:
 
-The project addresses two critical challenges in modern cybersecurity:
+1. **Fast Heuristic Triage**
+2. **Deep Cognitive AI Analysis**
 
-- **Alert Fatigue** caused by massive volumes of low-value security alerts
-- **High AI Operational Costs** due to excessive token consumption
-
-To solve these problems, the pipeline implements a **multi-stage triage architecture** that filters approximately **98% of benign or low-priority events** before forwarding only high-risk incidents to an AI analysis engine.
-
-The result is a scalable, cost-efficient, and context-aware threat detection system capable of identifying sophisticated attack techniques while minimizing false positives.
+This design enables high scalability, low latency, and cost-efficient AI usage while maintaining high detection accuracy.
 
 ---
 
-# Features
+# Architecture Overview
 
-- Real-time log ingestion and normalization
-- Weighted heuristic threat scoring
-- AI-powered contextual threat analysis
-- Elasticsearch-based centralized storage
-- Kibana dashboards for live monitoring
-- ES|QL-powered incident filtering
-- Cross-platform schema normalization
-- Cost-efficient AI routing logic
-
----
-
-# Architecture
 
 ```text
                 +----------------------+
@@ -72,3 +56,201 @@ The result is a scalable, cost-efficient, and context-aware threat detection sys
                 | Kibana Dashboard     |
                 | ES|QL Visualization  |
                 +----------------------+
+```
+
+---
+
+# Stage 1 — Heuristic Triage & Normalization (`scc.py`)
+
+The first worker acts as the **real-time triage engine** responsible for rapidly processing raw telemetry.
+
+Its primary objective is to filter noise and identify potentially suspicious activity before invoking expensive AI analysis.
+
+---
+
+## Core Responsibilities
+
+### Real-Time Monitoring
+
+The worker continuously monitors recent logs stored in Elasticsearch.
+
+### Sliding Window Processing
+
+The engine processes logs in small batches:
+
+```text
+Window Size = 100 Logs
+```
+
+This ensures:
+
+- Low latency
+- Continuous stream analysis
+- Fast incident prioritization
+
+---
+
+## Detection Logic
+
+A custom heuristic scoring algorithm evaluates each log based on:
+
+- Attack signatures
+- Behavioral indicators
+- IOC matching
+- Event correlations
+- Suspicious command execution
+- Obfuscation techniques
+
+---
+
+## Security Enrichment
+
+Each processed log is enriched with:
+
+```json
+{
+  "security_score": 85
+}
+```
+
+The `security_score` represents the estimated maliciousness probability derived from heuristic analysis.
+
+---
+
+## Example Indicators
+
+| Indicator | Score Weight |
+|---|---|
+| Mimikatz Signature | +50 |
+| PowerShell Obfuscation | +30 |
+| Encoded Commands | +20 |
+| Suspicious Event ID 4104 | +20 |
+| Privilege Escalation Indicators | +25 |
+
+---
+
+## Design Goals
+
+The Stage 1 worker is optimized for:
+
+- High throughput
+- Low computational overhead
+- Fast filtering
+- Massive log volume handling
+
+This stage acts as the pipeline's **gatekeeper**.
+
+---
+
+# Stage 2 — Cognitive Inference & Validation (`LLM.py`)
+
+The second worker provides advanced contextual analysis using a Large Language Model.
+
+Unlike traditional SIEM systems that rely solely on static detection rules, this stage performs semantic reasoning and intent analysis.
+
+---
+
+## Elasticsearch Querying
+
+The worker specifically searches for logs already enriched with:
+
+```json
+{
+  "security_score": ">= 60"
+}
+```
+
+This threshold-based routing dramatically reduces unnecessary AI requests.
+
+---
+
+# Threshold Filtering Logic
+
+Only logs classified as **High-Risk** are escalated.
+
+```text
+Security Score ≥ 60
+```
+
+This filtering mechanism provides:
+
+- Reduced API costs
+- Faster AI response times
+- Better scalability
+- High-signal threat analysis
+
+---
+
+# LLM Analysis Pipeline
+
+Selected logs are forwarded to:
+
+- Groq API
+- Llama 3.3 70B
+
+The AI performs:
+
+- Contextual reasoning
+- Behavioral interpretation
+- Threat intent analysis
+- Human-readable explanation generation
+
+---
+
+## AI Output Example
+
+```json
+{
+  "security_score": 87,
+  "verdict": "Malicious",
+  "ai_comment": "The command sequence strongly resembles credential dumping behavior associated with Mimikatz execution."
+}
+```
+
+---
+
+# Operational Impact
+
+The dual-worker architecture creates a **High-Signal Security Pipeline**.
+
+Instead of analyzing every log with AI, the heuristic engine acts as an intelligent filter that forwards only the most suspicious events for cognitive analysis.
+
+---
+
+# Key Benefits
+
+## Cost Optimization
+
+The LLM is invoked only for high-risk events.
+
+Benefits include:
+
+- Reduced token consumption
+- Lower infrastructure costs
+- Sustainable production deployment
+
+---
+
+## Reduced Alert Fatigue
+
+The system filters out approximately:
+
+```text
+~98% of low-value telemetry
+```
+
+allowing analysts to focus only on actionable incidents.
+
+---
+
+## Improved Detection Accuracy
+
+The combination of:
+
+- deterministic heuristics
+- contextual AI reasoning
+
+significantly reduces false positives compared to traditional rule-based systems.
+
+
+---
